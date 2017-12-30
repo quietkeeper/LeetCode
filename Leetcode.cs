@@ -1186,4 +1186,27 @@ namespace NCProjects
         }
         #endregion
     }
+    class BinarySearch
+    {
+        public int ClosestNumberInSortedArray(int target, int[] arr)
+        {
+            if (arr == null || arr.Length == 0)
+                return -1;
+            int start = 0, end = arr.Length - 1;
+            while (start < end - 1)
+            {
+                int mid = start + (end - start) / 2;
+                if (arr[mid] == target)
+                    return mid;
+                if (arr[mid] > target)
+                    end = mid;
+                else
+                    start = mid;
+            }
+            if (Math.Abs(arr[start] - target) < Math.Abs(arr[end] - target))
+                return start;
+            else
+                return end;
+        }
+    }
 }

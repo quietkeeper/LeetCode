@@ -1,0 +1,2 @@
+C:\Workspace\GitHub\LeetCode\obj\Debug\LeetCode.csprojResolveAssemblyReference.cache
+C:\Workspace\GitHub\LeetCode\obj\Debug\LeetCode.csproj.CoreCompileInputs.cache
