@@ -42,9 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ch2.cs" />
+    <Compile Include="Ch3.cs" />
+    <Compile Include="Ch4.cs" />
     <Compile Include="Classes.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Leetcode.cs" />
+    <Compile Include="Lintcode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

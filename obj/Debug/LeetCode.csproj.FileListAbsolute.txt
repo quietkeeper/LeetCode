@@ -1,2 +1,6 @@
 C:\Workspace\GitHub\LeetCode\obj\Debug\LeetCode.csprojResolveAssemblyReference.cache
-C:\Workspace\GitHub\LeetCode\obj\Debug\LeetCode.csproj.CoreCompileInputs.cache
+C:\Workspace\GitHub\LeetCode\bin\Debug\LeetCode.exe.config
+C:\Workspace\GitHub\LeetCode\bin\Debug\LeetCode.exe
+C:\Workspace\GitHub\LeetCode\bin\Debug\LeetCode.pdb
+C:\Workspace\GitHub\LeetCode\obj\Debug\LeetCode.exe
+C:\Workspace\GitHub\LeetCode\obj\Debug\LeetCode.pdb
