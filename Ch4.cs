@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace NCProjects
 {
     public class ListNode
@@ -15,6 +16,7 @@ namespace NCProjects
         {
             this.val = val;
             next = null;
+            
         }
     }
     public class Ch4

@@ -46,6 +46,18 @@ namespace LeetCode
         public int val;
         public string strValue;
     }
+    public class Point
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
 
+    class Record {
+     public int id, score;
+     public Record(int id, int score){
+         this.id = id;
+         this.score = score;
+     }
+ }
    // class 
 }

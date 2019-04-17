@@ -76,6 +76,90 @@ namespace NCProjects
 
         #endregion
 
+        #region 3 Longest Substring Without Repeating Characters
+        public int LengthOfLongestSubstring(string s) {
+            if (string.IsNullOrEmpty(s))
+                return -1;
+            char[] char_Array = s.ToCharArray();
+            HashSet<char> temp = new HashSet<char>();
+            int max = 0;
+            for (int i = 0; i < char_Array.Length; i++)
+            {
+                for (int j = i; j < char_Array.Length; j++)
+                {
+                    if (!temp.Contains(char_Array[j]))
+                    {
+                        temp.Add(char_Array[j]);
+                    }
+                    else
+                    {
+                        if (temp.Count > max)
+                        {
+                            max = temp.Count;
+                        }
+                        temp.Clear();
+                        break;
+                    }
+                }
+            }
+            return max;
+        }
+        #endregion
+
+        #region 5 LongestPalindrome substring
+        public string LongestPalindromeSubstring(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return string.Empty;
+            int max=0;
+            string result=string.Empty;
+            for (int i = 0; i < s.Length; i++)
+            {
+                string sub = GetPalindromeSub(s, i);
+                if (sub.Length > max)
+                {
+                    max = sub.Length;
+                    result = sub;
+                }
+            }
+            return result;
+        }
+
+        public string GetPalindromeSub(string s, int starting)
+        {
+            int count1 = 0, count2 = 1;
+            int preIndex=0,postIndex=0;
+            for (int i = starting, pre = starting, post = starting + 1; i < s.Length && pre >= 0 && post < s.Length; i++, pre--, post++)
+            {
+                if (s[pre] == s[post])
+                {
+                    count1 += 2;
+                    preIndex = pre;
+                    postIndex = post;
+                }
+                else
+                    break;
+
+            }
+            for (int i = starting, pre = starting-1, post = starting + 1; i < s.Length && pre >= 0 && post < s.Length; i++, pre--, post++)
+            {
+                if (s[pre] == s[post])
+                {
+                    count2 += 2;
+                    if (count2 > count1)
+                    {
+                        preIndex = pre;
+                        postIndex = post;
+                    }
+
+                }
+                else
+                    break;
+            }
+            return s.Substring(preIndex, postIndex - preIndex + 1);
+        }
+        #endregion
+        
         #region 6
         public string Convert(string s, int numRows)
         {
@@ -118,6 +202,103 @@ namespace NCProjects
                 }
             }
             return new String(c);
+        }
+        #endregion
+
+        #region 7
+        public int ReverseInteger(int ori) {
+        Int32 result=0;
+        try{
+            while(ori!=0)
+            {
+                int temp=ori%10;
+                
+                result =checked( result * 10+temp);
+                if (result > Int32.MaxValue || result < Int32.MinValue)
+                    return 0;
+                ori/=10;
+            }
+        }
+        catch(Exception ex)
+        {
+            return 0;
+        }
+        
+        return result;
+        
+    }
+        #endregion
+
+        #region 8
+        public int MyAtoi(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return 0;
+            string s = str.Trim();
+            if (string.IsNullOrEmpty(s))
+                return 0;
+            bool isNagetive = s[0] == 45;
+            bool hasSigned = isNagetive;
+            int result = 0;
+            try
+            {
+                for (int i = isNagetive ? 1 : 0; i < s.Length; i++)
+                {
+                    if (s[i] >= 48 && s[i] <= 57)
+                        result = checked(result * 10 + (s[i] - 48));
+                    else
+                        if (s[i] == 43 && !hasSigned)
+                        {
+                            hasSigned = true;
+                            continue;
+
+                        }
+                        else
+                            break;
+                }
+                if (isNagetive)
+                    result = result * -1;
+            }
+            catch (Exception ex)
+            {
+                if (isNagetive)
+                    return Int32.MinValue;
+                else
+                    return Int32.MaxValue;
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region 9 Palindrome Number
+        public bool IsPalindrome(int x)
+        {
+            if (x >= 0 && x < 10)
+                return true;
+            if (x < 0 || x % 10 == 0)
+                return false;
+            int xPrime = ReverseInteger(x);
+            return xPrime == x;
+        }
+        #endregion
+
+        #region 11 Container With Most Water
+        public int MaxArea(int[] arr)
+        {
+            if (arr == null || arr.Length < 2)
+                return 0;
+            int max = 0;
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                for (int j = i + 1; j < arr.Length; j++)
+                {
+                    int value = (j - i) * (arr[i] < arr[j] ? arr[i] : arr[j]);
+                    if (max < value)
+                        max = value;
+                }
+            }
+            return max;
         }
         #endregion
 
@@ -1183,6 +1364,49 @@ namespace NCProjects
                     }
                 }
             return result;
+        }
+        #endregion
+
+        #region 896
+        public bool IsMonotonic(int[] arr) {
+            if (arr == null || arr.Length == 0)
+                return false;
+            if (arr.Length == 1)
+                return true;
+            bool isMonotonic = true;
+            int monotonic = 0;//0 no value, 1 increase, 2 decrease
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                if (monotonic == 0)
+                {
+                    if (arr[i] > arr[i + 1])
+                    {
+                        monotonic = 2;
+                    }
+                    else if (arr[i] < arr[i + 1])
+                        monotonic = 1;
+                    continue;
+                }
+                else if (monotonic == 1)
+                {
+                    if (arr[i] > arr[i + 1])
+                    {
+                        isMonotonic = false;
+                        break;
+                    }
+                }
+                
+                else
+                {
+                    if (arr[i] < arr[i + 1])
+                    {
+                        isMonotonic = false;
+                        break;
+                    }
+                    
+                }
+            }
+            return isMonotonic;
         }
         #endregion
     }
