@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LeetCode;
+using System.Collections;
 
 namespace NCProjects
 {
@@ -302,6 +303,40 @@ namespace NCProjects
         }
         #endregion
 
+        #region 12 IntToRoman
+        public string IntToRoman(int num)
+        {
+            Dictionary<int, string> dict = new Dictionary<int, string>();
+            dict.Add(1,"I");
+            dict.Add(4, "IV");
+            dict.Add(5, "V");
+            dict.Add(9, "IX");
+            dict.Add(10,"X");
+            dict.Add(40, "XL");
+            dict.Add(50,"L");
+            dict.Add(90, "XC");
+            dict.Add(100,"C");
+            dict.Add(400, "CD");
+            dict.Add(500,"D" );
+            dict.Add(900, "CM");
+            dict.Add(1000,"M");
+            string result = string.Empty;
+            foreach (var item in dict.OrderByDescending(x => x.Key))
+            {
+                
+                int t = num / item.Key;
+                while (t > 0)
+                {
+                    result = result + item.Value;
+                    t--;
+                }
+                num = num % (item.Key);
+            }
+            return result;
+        }
+        #endregion 
+
+
         #region 13
         public int RomanToInt(string s)
         {
@@ -326,6 +361,52 @@ namespace NCProjects
             }
             return sum;
         }
+        #endregion
+
+        #region 14. Longest Common Prefix
+        public string LongestCommonPrefix(string[] strs)
+        {
+            if (strs == null || strs.Length == 0)
+                return string.Empty;
+            string common = strs[0];
+            for (int i = 1; i < strs.Length; i++)
+            {
+                if (common.Length == 0)
+                    break;
+                int j = 0;
+                int shortest=Math.Min(common.Length,strs[i].Length);
+                foreach (char c in strs[i])
+                {
+                    if (j<shortest&&c == common[j])
+                        j++;
+                    else
+                    {
+                        break;
+                    }
+                }
+                common = common.Substring(0, j);
+
+            }
+            return common;
+        }
+        #endregion
+
+        #region 17. Letter Combinations of a Phone Number
+        //public IList<string> LetterCombinations(string digits)
+        //{
+        //    if (string.IsNullOrEmpty(digits))
+        //        return null;
+        //    Dictionary<char, string> dict = new Dictionary<char, string>();
+        //    dict.Add('2', "abc");
+        //    dict.Add('3', "def");
+        //    dict.Add('4', "ghi");
+        //    dict.Add('5', "jkl");
+        //    dict.Add('6', "mno");
+        //    dict.Add('7', "pqrs");
+        //    dict.Add('8', "tuv");
+        //    dict.Add('9', "wxyz");
+        //    ArrayList result = new ArrayList();
+        //}
         #endregion
 
         #region 21

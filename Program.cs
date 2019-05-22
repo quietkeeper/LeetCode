@@ -192,14 +192,14 @@ namespace NCProjects
 
 
 
-    /*
-     Question 3
-     */
+            /*
+             Question 3
+             */
             //int result = lc.LengthOfLongestSubstring(test);
             //Write(result);
-            
+
             //Console.ReadKey();
-            
+
             //int  i=lc.FirstUniqChar("leetcode");
             //StringBuilder sb = new StringBuilder();
             //sb.Append('a');
@@ -224,7 +224,7 @@ namespace NCProjects
             //Console.WriteLine("upper bound 1: " + upperBound1);
             //Console.WriteLine("lower bound 1: " + lowerBound1);
 
-           // Algrithms.QuickSort(arrNoDuplicate, 0, arrNoDuplicate.Length - 1);
+            // Algrithms.QuickSort(arrNoDuplicate, 0, arrNoDuplicate.Length - 1);
             //Write(arrNoDuplicate);
 
             //int t = 122; long r = 0;
@@ -240,16 +240,21 @@ namespace NCProjects
 
             //string str = "caba";
             //string sub = lc.LongestPalindromeSubstring(str);
-            
+
             #endregion
 
             #region 7
-            int ori=1534236469;
-            int result = lc.ReverseInteger(ori);
+            //int ori=1534236469;
+            //int result = lc.ReverseInteger(ori);
+            //
+            #endregion
+            #endregion
+            string s= "a";
+            long n = 1000000000000;
+            string str = Helper.GetRepeatString(s, n);
+            long result = (long)Helper.GetAs(str);
             Console.Write(result);
             Console.ReadKey();
-            #endregion
-            #endregion
         }
             
 
