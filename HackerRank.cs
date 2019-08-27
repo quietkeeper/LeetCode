@@ -251,5 +251,136 @@ namespace LeetCode
             return false;
         }
         #endregion
+
+        #region Sherlock and Anagrams
+        static int sherlockAndAnagrams(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return 0;
+            int result = 0;
+            for (int i = 1; i < s.Length; i++)
+            {
+                Dictionary<string, int> dict = new Dictionary<string, int>();
+
+                for (int j=0;j<=s.Length-i;j++)
+                {
+                    string sub = new string(s.Substring(j, i).OrderBy(c => c).ToArray());
+                    if (dict.ContainsKey(sub))
+                        dict[sub]++;
+                    else
+                        dict.Add(sub, 1);
+                }
+                foreach (var pair in dict)
+                {
+                    result += pair.Value * (pair.Value - 1) / 2;
+                }
+            }
+            
+            return result;
+
+        }
+
+
+        #endregion
+
+        #region strange sort
+        class Pair
+        {
+            public int ori;
+            public int newOne;
+        }
+        public static List<string> StrangeSort(List<string> sList,List<int> lookup)
+        {
+            if (sList == null || sList.Count == 0)
+                return new List<string>();
+
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for (int i = 0; i < lookup.Count; i++)
+            {
+                dict.Add(lookup[i], i);
+            }
+
+            List<string> result = new List<string>();
+            List<Pair> helper = new List<Pair>();
+            foreach (var s in sList)
+            {
+                Pair temp = new Pair();
+                temp.newOne = Convert.ToInt32(s);
+                temp.ori = Convert.ToInt32(NumConverter(s,dict));
+                helper.Add(temp);
+            }
+            helper = helper.OrderBy(x => x.ori).ToList();
+
+            foreach (var p in helper)
+            {
+                result.Add(p.newOne.ToString());
+            }
+
+            return result;
+
+        }
+        public static string NumConverter(string str, Dictionary<int, int> dict)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in str)
+            {
+                sb.Append((char)('0'+dict[c-'0']));
+            }
+            return sb.ToString();
+
+        }
+        #endregion
+
+        #region
+        public static int sharePurchase(String s)
+        {
+            int result = 0;
+            int len = s.Length;
+            List<char> charList = new List<char>();
+            charList.Add('A');
+            charList.Add('B');
+            charList.Add('C');
+
+            int left = 0, right = 0;
+            int form = 0;
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+
+            while (right < s.Length)
+            {
+                char c = s[right];
+
+                if (!dict.ContainsKey(c) && charList.Contains(c))
+                {
+                    form++;
+                    dict.Add(c, 1);
+                }
+                else if (dict.ContainsKey(c))
+                {
+                    dict[c]+= 1;
+                }
+
+                while (form == 3 && left <= right)
+                {
+                    result += len - right;
+                    char cLeft = s[left];
+                    if (!dict.ContainsKey(cLeft)) { left++; continue; }
+                    if (dict[cLeft] == 1)
+                    {
+                        dict.Remove(cLeft);
+                        form--;
+                    }
+                    else
+                    {
+                        dict[cLeft]-= 1;
+                    }
+                    left++;
+                }
+                right++;
+
+            }
+
+            return result;
+        }
+        #endregion
     }
 }

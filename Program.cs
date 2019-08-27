@@ -251,9 +251,16 @@ namespace NCProjects
             #endregion
             string s= "a";
             long n = 1000000000000;
-            string str = Helper.GetRepeatString(s, n);
-            long result = (long)Helper.GetAs(str);
-            Console.Write(result);
+            //string str = Helper.GetRepeatString(s, n);
+            //long result = (long)Helper.GetAs(str);
+            //List<string> l = new List<string>{ "990","332","32" };
+            //List<int> lookup = new List<int> { 3, 5, 4, 6, 2, 7, 9, 8, 0, 1 };
+            //List<string> result = HackerRank.StrangeSort(l, lookup);
+            int[][] arr =new int[][] { new int[] { 3, 0, 8, 4 }, new int[] { 2, 4, 5, 7 }, new int[] { 9, 2, 6, 3 }, new int[] { 0, 3, 1, 0 } };
+            Leetcode lt = new Leetcode();
+           int result=  lt.MaxIncreaseKeepingSkyline(arr);
+            
+                Console.Write(result);
             Console.ReadKey();
         }
             

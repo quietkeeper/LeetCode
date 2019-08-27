@@ -10,21 +10,19 @@ namespace NCProjects
 {
     class Leetcode
     {
+        Dictionary<string, List<int>> dict = new Dictionary<string, List<int>>();
         #region 1
         public int[] LeetCode1_TwoSum(int[] arr, int sum)
         {
+            
             int[] result = new int[2] { -1, -1 };
             if (arr == null || arr.Length == 0)
                 return result;
 
             for (int i = 0; i < arr.Length - 1; i++)
             {
-                if (arr[i] > sum)
-                    return result;
                 for (int j = i + 1; j < arr.Length; j++)
                 {
-                    if (arr[j] > sum)
-                        return result;
                     if (arr[i] + arr[j] == sum)
                     {
                         result[0] = i;
@@ -162,7 +160,7 @@ namespace NCProjects
         #endregion
         
         #region 6
-        public string Convert(string s, int numRows)
+        public string StringConvert(string s, int numRows)
         {
             //if (s == null || s.Length == 0)
             //    return s;
@@ -205,7 +203,7 @@ namespace NCProjects
             return new String(c);
         }
         #endregion
-
+        
         #region 7
         public int ReverseInteger(int ori) {
         Int32 result=0;
@@ -391,6 +389,14 @@ namespace NCProjects
         }
         #endregion
 
+        #region 15. 3Sum
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            //if (nums == null || nums.Length == 0)
+            //    return null;
+            throw new NotImplementedException();
+        }
+        #endregion
         #region 17. Letter Combinations of a Phone Number
         //public IList<string> LetterCombinations(string digits)
         //{
@@ -897,6 +903,80 @@ namespace NCProjects
         }
         #endregion
 
+        #region 297. Serialize and Deserialize Binary Tree
+        // Encodes a tree to a single string.
+        public string serialize(TreeNode root)
+        {
+            StringBuilder result = new StringBuilder();
+            if (root == null)
+                return "[]";
+            Queue<TreeNode> q = new Queue<TreeNode>();
+            q.Enqueue(root);
+            result.Append("[");
+            while (q.Count > 0)
+            {
+                TreeNode temp = q.Dequeue();
+                if (temp.val == Int32.MinValue)
+                {
+                    result.Append("null,");
+                }
+                else
+                {
+                    result.Append(temp.val + ",");
+                    if (temp.left == null)
+                        q.Enqueue(new TreeNode(Int32.MinValue) { });
+                    else
+                        q.Enqueue(root.left);
+                    if (temp.right == null)
+                        q.Enqueue(new TreeNode(Int32.MinValue) { });
+                    else
+                        q.Enqueue(root.right);
+                    
+                }
+                
+            }
+            result.Remove(result.Length - 1, 1);
+            result.Append("]");
+            return result.ToString();
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(string data)
+        {
+            if (string.IsNullOrEmpty(data)||data=="null")
+                return null;
+            string[] d = data.Split(',');
+            Queue<TreeNode> q = new Queue<TreeNode>();
+            TreeNode root = new TreeNode(Convert.ToInt32(d[0]));
+            q.Enqueue(root);
+            int counter = 1;
+
+            while (q.Count > 0)
+            {
+                TreeNode temp = q.Dequeue();
+                if (counter >= d.Length)
+                    break;
+                if (d[counter] != "null")
+                {
+                    TreeNode left= new TreeNode(Convert.ToInt32(d[counter]));
+                    temp.left = left;
+                    q.Enqueue(left);
+                }
+                counter += 1;
+                if (counter >= d.Length)
+                    break;
+                if (d[counter] != "null")
+                {
+                    TreeNode right = new TreeNode(Convert.ToInt32(d[counter]));
+                    temp.right = right;
+                    q.Enqueue(right);
+                }
+                counter += 1;
+            }
+            return root;
+        }
+        #endregion
+
         #region 303
         private int[] arr;
         //public Leetcode(int[] nums)
@@ -1021,7 +1101,36 @@ namespace NCProjects
             return result;
         }
         #endregion
-
+        #region 366. Find Leaves of Binary Tree
+        public int DsfTranverse(TreeNode root, Dictionary<int,List<TreeNode>> dict)
+        {
+            if (root == null)
+                return 0;
+            int depth = Math.Max(DsfTranverse(root.left, dict), DsfTranverse(root.right, dict)) + 1;
+            if (!dict.ContainsKey(depth))
+                dict.Add(depth, new List<TreeNode>());
+            dict[depth].Add(root);
+            root.left = null;
+            root.right = null;
+            return depth;
+        }
+        public IList<IList<int>> FindLeaves(TreeNode root)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            if (root == null)
+                return result;
+            Dictionary<int, List<TreeNode>> dict = new Dictionary<int, List<TreeNode>>();
+            int maxDepth = DsfTranverse(root, dict);
+            for (int i = 1; i <= maxDepth; i++)
+            {
+                List<int> leafs = new List<int>();
+                foreach (var n in dict[i])
+                    leafs.Add(n.val);
+                result.Add(leafs);
+            }
+            return result;
+        }
+        #endregion
         #region 383
         public bool CanConstruct(string ransomNote, string magazine)
         {
@@ -1448,6 +1557,46 @@ namespace NCProjects
         }
         #endregion
 
+        #region 807. Max Increase to Keep City Skyline
+        public int MaxIncreaseKeepingSkyline(int[][] arr)
+        {
+            if (arr == null || arr.Length == 0 || arr[0].Length == 0)
+                return -1;
+            int[][] skylines = GetSkylines(arr);
+
+            int difference = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = 0; j < arr[0].Length; j++)
+                {
+                    int minLine = Math.Min(skylines[0][i], skylines[1][j]);
+                    if (arr[i][j] < minLine)
+                        difference += minLine - arr[i][j];
+                }
+            }
+            return difference;
+        }
+        private int[][] GetSkylines(int[][] arr)
+        {
+            int[][] result = new int[2][];
+            result[0] = new int[arr.Length];
+            result[1] = new int[arr[0].Length];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = 0; j < arr[0].Length; j++)
+                {
+                    if (result[0][i] < arr[i][j])// horizontal
+                        result[0][i] = arr[i][j];
+                    if (result[1][j] < arr[i][j])// vertical
+                        result[1][j] = arr[i][j];
+                }
+            }
+            return result;
+        }
+
+
+        #endregion
+
         #region 896
         public bool IsMonotonic(int[] arr) {
             if (arr == null || arr.Length == 0)
@@ -1488,6 +1637,36 @@ namespace NCProjects
                 }
             }
             return isMonotonic;
+        }
+        #endregion
+
+        #region 1038. Binary Search Tree to Greater Sum Tree
+        int GetSum(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+            int sum = GetSum(root.left) + GetSum(root.right) + root.val;
+            return sum;
+        }
+        int DSF_InOrder(TreeNode root, int sum)
+        {
+            if (root == null)
+                return 0;
+            int oldVal = root.val;
+            int leftVal = DSF_InOrder(root.left, sum);
+            
+            root.val = sum-leftVal;
+            leftVal += oldVal;
+            int rightVal= DSF_InOrder(root.right, sum - leftVal);
+            return leftVal+rightVal;
+        }
+        public TreeNode BstToGst(TreeNode root)
+        {
+            if (root == null)
+                return null;
+            int sum = GetSum(root);
+            DSF_InOrder(root, sum);
+            return root;
         }
         #endregion
     }
