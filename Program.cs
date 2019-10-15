@@ -20,7 +20,7 @@ namespace NCProjects
             //int[][] points = new int[][]{new int[]{3,3},new int[]{5,-1},new int[]{-2,4}};
             //int[][] result=oa.KClosest(points, 2);
 
-            //int[] arr = { 7, 10, 4, 3, 20, 15 };
+            int[] arr = { 7, 10, 4, 3, 20, 15 };
             //int result = oa.QuickSelect(arr, 0, arr.Length - 1, 3);
             //Write(result);
             //foreach (int[] r in result)
@@ -224,8 +224,8 @@ namespace NCProjects
             //Console.WriteLine("upper bound 1: " + upperBound1);
             //Console.WriteLine("lower bound 1: " + lowerBound1);
 
-            // Algrithms.QuickSort(arrNoDuplicate, 0, arrNoDuplicate.Length - 1);
-            //Write(arrNoDuplicate);
+            Algrithms.QuickSort(arrNoDuplicate, 0, arrNoDuplicate.Length - 1);
+            Write(arrNoDuplicate);
 
             //int t = 122; long r = 0;
             //for (int i = 0; i < 50; i++)
@@ -256,11 +256,11 @@ namespace NCProjects
             //List<string> l = new List<string>{ "990","332","32" };
             //List<int> lookup = new List<int> { 3, 5, 4, 6, 2, 7, 9, 8, 0, 1 };
             //List<string> result = HackerRank.StrangeSort(l, lookup);
-            int[][] arr =new int[][] { new int[] { 3, 0, 8, 4 }, new int[] { 2, 4, 5, 7 }, new int[] { 9, 2, 6, 3 }, new int[] { 0, 3, 1, 0 } };
-            Leetcode lt = new Leetcode();
-           int result=  lt.MaxIncreaseKeepingSkyline(arr);
+           // int[][] arr =new int[][] { new int[] { 3, 0, 8, 4 }, new int[] { 2, 4, 5, 7 }, new int[] { 9, 2, 6, 3 }, new int[] { 0, 3, 1, 0 } };
+           // Leetcode lt = new Leetcode();
+           //int result=  lt.MaxIncreaseKeepingSkyline(arr);
             
-                Console.Write(result);
+            //    Console.Write(result);
             Console.ReadKey();
         }
             

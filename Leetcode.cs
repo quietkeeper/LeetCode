@@ -414,7 +414,35 @@ namespace NCProjects
         //    ArrayList result = new ArrayList();
         //}
         #endregion
+        #region 20. Valid Parentheses
+        public bool IsValid(string str)
+        {
+            if (str == null || str.Length % 2 > 0)
+                return false;
+            Dictionary<char, char> dict = new Dictionary<char, char>();
+            dict.Add('}', '{');
+            dict.Add(']', '[');
+            dict.Add(')', '(');
 
+            Stack<char> s = new Stack<char>();
+            foreach (var c in str)
+            {
+                if (dict.Values.Contains(c))
+                    s.Push(c);
+                if (dict.Keys.Contains(c))
+                {
+                    if (s.Count == 0)
+                        return false;
+                    char k = s.Pop();
+                    if (dict[c] == k)
+                        continue;
+                    else
+                        return false;
+                }
+            }
+            return s.Count == 0;
+        }
+        #endregion
         #region 21
         public ListNode MergeTwoLists(ListNode l1, ListNode l2)
         {
@@ -491,6 +519,56 @@ namespace NCProjects
                 }
             }
             return -1;
+        }
+        #endregion
+
+        #region 53 Maximum Subarray
+        public int MaxSubArray(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return int.MinValue;
+
+            int result = nums[0];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int tempSum = nums[i];
+                for (int j = i + 1; j < nums.Length; j++)
+                {
+                    if (tempSum > result)
+                        result = tempSum;
+                    tempSum += nums[j];
+                }
+                if (tempSum > result)
+                    result = tempSum;
+            }
+            return result;
+        }
+
+        public int MaxSub_Array(int[] arr)
+        {
+            if (arr == null || arr.Length == 0)
+                return int.MinValue;
+            if (arr.Length == 1)
+                return arr[0];
+            int result = GetMaxSub(arr,0,arr.Length-1);
+            return result;
+
+        }
+        private int GetMaxSub(int[] arr, int start, int end)
+        {
+            if (arr.Length == 1)
+                return arr[0];
+            if (end < start)
+                return int.MinValue;
+            int medium = start + (end - start) / 2;
+            int result = arr[medium];
+            int lMax = GetMaxSub(arr, start, medium - 1);
+            int rMax= GetMaxSub(arr, medium+1, end);
+            int part = Math.Max(lMax, rMax);
+            if (part > 0)
+                return result + medium;
+            else
+                return result;
         }
         #endregion
 
@@ -592,6 +670,45 @@ namespace NCProjects
         }
         #endregion
 
+        #region 146. LRU Cache
+
+        public class LRUNode
+        {
+            public LRUNode pre;
+            public LRUNode next;
+            public int key;
+            public int value;
+
+            public LRUNode(int key, int value)
+            {
+                this.key = key;
+                this.value = value;
+
+                pre = null;
+                next = null;
+            }
+        }
+        public class LRUCache
+        {
+
+            public LRUCache(int capacity)
+            {
+                
+            }
+
+            public int Get(int key)
+            {
+                
+                    
+                return -1;
+            }
+
+            public void Put(int key, int value)
+            {
+               
+            }
+        }
+        #endregion
         #region 168
         public string ConvertToTitle(int n)
         {
@@ -1554,6 +1671,42 @@ namespace NCProjects
                     }
                 }
             return result;
+        }
+        #endregion
+
+        #region 654. Maximum Binary Tree
+        public TreeNode ConstructMaximumBinaryTree(int[] arr)
+        {
+            if (arr == null || arr.Length == 0)
+                return null;
+            TreeNode root = MaxTree(arr, 0, arr.Length - 1);
+            return root;
+        }
+        private TreeNode MaxTree(int[] arr, int start, int end)
+        {
+            if (start >end)
+                return null;
+            int maxPosition = GetMaxPosition(arr, start, end);
+            TreeNode root = new TreeNode(arr[maxPosition]);
+            
+            root.left = MaxTree(arr, start, (maxPosition - 1));
+            root.right= MaxTree(arr, (maxPosition + 1), end);
+            return root;
+        }
+        private int GetMaxPosition(int[] arr,int start, int end)
+        {
+            if (start >= arr.Length || end < 0 )
+                return -1;
+            int max = int.MinValue, pointer = 0 ;
+            for (int i = start; i <= end ; i++)
+            {
+                if (arr[i] > max)
+                {
+                    max = arr[i];
+                    pointer = i;
+                }
+            }
+            return pointer;
         }
         #endregion
 
